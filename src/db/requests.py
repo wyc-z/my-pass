@@ -82,7 +82,7 @@ class Admin:
             cur = conn.cursor()
             cur.execute(
                 """
-                SELECT username, password, nonce FROM admin WHERE id=1 
+                SELECT username, password, nonce FROM admin WHERE id=1
                 """
             )
             return cur.fetchone()

@@ -1,8 +1,11 @@
-from domain import modules
+from pathlib import Path
+
 from auth import crypt
 from db import requests
+from domain import modules
 from srv import ui_controller as ui
-from pathlib import Path
+
+directory = str(Path(__file__).resolve().parent.parent / "vault")
 
 
 def gen_pswd(length: int, sym: bool) -> str:
@@ -64,6 +67,7 @@ def save_admin(user: str, password: str, passwordv: str):
         return "FILL IN ALL THE FIELDS!"
     elif password != passwordv:
         return "PASSWORDS DON'T MATCH"
+    Path(directory).mkdir(exist_ok=True)
     requests.init()
     usr, pswd, nonce = crypt.encrypt_admin(user, password)
     requests.Admin(usr, pswd, nonce).save()
